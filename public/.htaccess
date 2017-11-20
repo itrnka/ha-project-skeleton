@@ -1,0 +1,42 @@
+# 1. ENVIRONMENT SETUP / variable HA_APP_ENV ---------------------------------------------------------------------------
+# You can switch your web application configuration by setting configuration name to enviroment variable HA_APP_ENV.
+# If enviroment variable HA_APP_ENV is not used (or could not be used), value 'web' is automatically used.
+# This is e.g. case when mod_env or mod_setenvif is disabled on your apache.
+
+# 1.A Set variable HA_APP_ENV via module mod_env (this is usefull for loading configuration independent on host name)
+#<IfModule mod_env.c>
+#    SetEnv HA_APP_ENV web
+#</IfModule>
+
+# 1.B Set variable HA_APP_ENV via module mod_setenvif (this is usefull for loading configuration by host name or by
+# another condition).
+#<IfModule mod_setenvif.c>
+#    SetEnvIfNoCase Host ^(.*)$ HA_APP_ENV=no-web-host # set default nonmatching value as first (you can use this configuration to loading error pages)
+#    SetEnvIf Host www.example-1.com HA_APP_ENV=example-1 # set configuration name for host1
+#    SetEnvIf Host www.example-2.com HA_APP_ENV=example-2 # set configuration name for host2
+#    SetEnvIf Host www.example-n.com HA_APP_ENV=example-n # set configuration name for hostN
+#</IfModule>
+
+<IfModule mod_env.c>
+    SetEnv HA_APP_ENV web
+</IfModule>
+
+# 2. REWRITE SETUP -----------------------------------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+
+    # Try uncoment next line on HTTP 500 error or if rewrite not working:
+    #Options +FollowSymLinks -MultiViews
+
+    RewriteEngine On
+    RewriteBase /
+
+    # If requested directory or file does not exists, rewrite all to index.php (this runs your php application)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ index.php [QSA,L]
+
+    # Disable direct access to index.php files (SEO optimization)
+    RewriteCond %{THE_REQUEST} ^(.*)/index\.php?(\?(.*))$
+    RewriteRule ^(.*)$ / [QSA,L,R=301]
+
+</IfModule>

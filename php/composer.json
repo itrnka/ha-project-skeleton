@@ -1,0 +1,19 @@
+{
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.1.0",
+        "itrnka/ha-framework": "^1.5",
+        "symfony/console": "^3.3"
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "composer dumpautoload -o"
+        ],        
+        "post-install-cmd": [
+            "composer dumpautoload -o"
+        ]
+    },
+    "config": {
+
+    }
+}

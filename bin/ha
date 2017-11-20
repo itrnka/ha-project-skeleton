@@ -1,0 +1,71 @@
+#!/usr/bin/php
+<?php
+declare(strict_types = 1);
+
+use Symfony\Component\Console\Application;
+
+########################################################################################################################
+# Bootstrap
+########################################################################################################################
+
+$scriptStartTime = microtime(true);
+
+// setup php
+ini_set("display_errors", "1");
+error_reporting(E_ALL);
+
+// load ini file
+$iniFilePath = __DIR__ . '/ha.ini';
+if (!is_file($iniFilePath)) {
+    echo 'ERROR: Could not load file ' . $iniFilePath . PHP_EOL;
+    exit;
+}
+$ini = @parse_ini_file($iniFilePath, true);
+if (!is_array($ini)) {
+    echo 'ERROR: ' . $iniFilePath . ' is invalid ini file' . PHP_EOL;
+    exit;
+}
+if (!count($ini)) {
+    echo 'ERROR: ' . $iniFilePath . ' has not configuration data or is not successfully parsed' . PHP_EOL;
+    exit;
+}
+
+// detect environment - you can use your custom logic here
+if (!isset($ini['env']['environment_name'])) {
+    $environmentName = 'console';
+    echo "Default console configuration is used, env.env_name is not found in {$iniFilePath}" . PHP_EOL;
+} else {
+    $environmentName = trim(strval($ini['env']['environment_name']));
+    if ($environmentName === '') {
+        echo 'ERROR: Empty env.env_name detected in ini file ' . $iniFilePath . PHP_EOL;
+        exit;
+    }
+}
+
+// load main runner
+include(dirname(__DIR__) . '/php/main.php');
+
+// setup locale for numbers
+if (!setlocale(LC_ALL, 'C')) {
+    throw new Error('Could not setup locale in app bootstrap');
+}
+
+// set real start of script (patch for bootstrap delay)
+main()->setScriptStartTime($scriptStartTime);
+
+########################################################################################################################
+# Run routing (in console is routing based on shell arguments)
+########################################################################################################################
+
+// create console application instance
+$consoleApp = new Application(main()->cfg('console.app.name'), main()->cfg('console.app.version'));
+
+// register console commands
+$commandClassList = main()->cfg('console.commands');
+foreach ($commandClassList AS $commandClass) {
+    $command = new $commandClass();
+    $consoleApp->add($command);
+}
+
+// run console application
+$consoleApp->run();
