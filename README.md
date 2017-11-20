@@ -1,0 +1,1 @@
+# ha-project-skeleton
