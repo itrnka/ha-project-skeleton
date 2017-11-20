@@ -1,6 +1,6 @@
 # Project skeleton for ha framework
 
-For more information about framework please see [framework documentation](https://github.com/itrnka/ha-framework/blob/master/README.md).
+For more informations about framework please see [framework documentation](https://github.com/itrnka/ha-framework/blob/master/README.md).
 
 
 ## Requirements
@@ -18,7 +18,10 @@ For more information about framework please see [framework documentation](https:
 - Add your project to host file (optional)
 - Open browser and enter URL...
 
+
 ## Directory structure
+
+Note: ha framework is installed via composer, so we can not found framework files in this skeleton.
 
 ### bin
 
