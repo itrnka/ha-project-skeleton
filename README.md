@@ -29,27 +29,27 @@ Note: ha framework is installed via composer, so we can not found framework file
 
 Console access to application.
 
-- `ha` executable php file
+- `ha` executable php file (console application runner)
 - `ha.bat` console opener for Windows
-- `ha.ini` configuration file
+- `ha.ini` configuration file for console application
 
 ### php
 
 Directory with php files (here is full php application code).
 
-- `conf` directory with configuration files
-   - `_shared.php` shared configuration
+- `conf` directory with project configurations files
+   - `_shared.php` shared configuration (configuration base)
    - `console.conf.php` configuration for console access
-   - `web.conf.php` configuration for HTTP access
+   - `web.conf.php` configuration for HTTP access (e.g. website, mobile site, API, ...)
 - `ver-1.0.0` directory for application code
    - `Examples` some simple class examples
    - `composer.json` package definition for composer
    - `helpers.php` simple PHP functions, which helps with some problems
-   - `main.php` application "constructor" 
+   - `main.php` application initializer
 
 ### public
 
 This is document root.
 
-- `.htaccess` example configuration and redirect setup for Apache HTTP server
+- `.htaccess` example configuration and redirect setup example for Apache HTTP server
 - `index.php` this is application bootstrap and handler for HTTP access to application
