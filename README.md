@@ -43,7 +43,7 @@ Directory with php files (here is full php application code).
    - `Examples` some simple class examples
    - `composer.json` package definition for composer
    - `helpers.php` simple PHP functions, which helps with some problems
-   - `main.php` application "constructor" 
+   - `main.php` application initializer
 
 ### public
 
