@@ -27,7 +27,7 @@ Note: ha framework is installed via composer, so we can not found framework file
 
 Console access to application.
 
-- `ha` executable php file
+- `ha` executable php file (console application runner)
 - `ha.bat` console opener for Windows
 - `ha.ini` configuration file
 
