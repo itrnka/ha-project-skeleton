@@ -1,3 +1,5 @@
+![ha framework](https://github.com/itrnka/ha-framework/blob/master/docs/img/ha-logo.png "ha framework")
+
 # Project skeleton for *ha* framework
 
 For more informations about framework please see [framework documentation](https://github.com/itrnka/ha-framework/blob/master/README.md).
